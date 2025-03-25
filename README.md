@@ -15,6 +15,12 @@ A sleek, user-friendly weather forecast application built with React that utiliz
 - 🎨 Light and dark theme support
 - 📍 Option to use current location (requires user permission)
 
+## 🚧 Upcoming Features
+
+- 🌐 **Multi-language Support**: Switch between different languages for a localized experience. The app will support English, Portuguese, Spanish, French, and more, making weather information accessible to users worldwide.
+
+- ⏱️ **Hourly Weather Details**: Expand the forecast cards to view detailed hourly weather predictions. This feature will allow users to see temperature changes, precipitation chances, wind shifts, and other weather conditions throughout the day with an intuitive, interactive interface.
+
 ## 🛠️ Technologies Used
 
 - **React**: JavaScript library for building the user interface
@@ -35,14 +41,12 @@ To run this project locally, you need to have installed:
 ## 🚀 Installation and Setup
 
 1. Clone this repository:
-
 ```bash
-git clone https://github.com/trzaskos/weather-now.git
+git clone https://github.com/yourusername/weather-now.git
 cd weather-now
 ```
 
 2. Install dependencies:
-
 ```bash
 npm install
 # or
@@ -50,13 +54,11 @@ yarn install
 ```
 
 3. Create a `.env` file in the root directory and add your OpenWeatherMap API key:
-
 ```
 REACT_APP_OPENWEATHER_API_KEY=your_api_key_here
 ```
 
 4. Start the development server:
-
 ```bash
 npm start
 # or
@@ -64,7 +66,6 @@ yarn start
 ```
 
 5. Access the app in your browser:
-
 ```
 http://localhost:3000
 ```
@@ -142,12 +143,14 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📧 Contact
 
-Maryele Trzaskos Gruber - [maryele.trzaskos@gmail.com](mailto:maryele.trzaskos@gmail.com)
+Your Name - [your-email@example.com](mailto:your-email@example.com)
 
-Project Link: [https://github.com/trzaskos/weather-now](https://github.com/trzaskos/weather-now)
+Project Link: [https://github.com/yourusername/weather-now](https://github.com/yourusername/weather-now)
 
 ## ☕ Support
 
 If you find this project helpful, consider buying me a coffee!
 
-<p><a href="https://www.buymeacoffee.com/trzaskos"> <img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="60" width="217" alt="trzaskos" /></a></p>
+<a href="https://www.buymeacoffee.com/trzaskos" target="_blank">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" >
+</a>
