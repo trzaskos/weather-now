@@ -143,7 +143,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📧 Contact
 
-Mary T Gruber - [maryele.trzaskos@gmail.com](mailto:maryele.trzaskos@gmail.com)
+Maryele Trzaskos Gruber - [maryele.trzaskos@gmail.com](mailto:maryele.trzaskos@gmail.com)
 
 Project Link: [https://github.com/trzaskos/weather-now](https://github.com/trzaskos/weather-now)
 
