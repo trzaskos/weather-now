@@ -1,51 +1,176 @@
 import axios from 'axios';
 
-// Chave da API OpenWeatherMap
+// OpenWeatherMap API Key
 const API_KEY = process.env.REACT_APP_OPENWEATHER_API_KEY;
 const BASE_URL = 'https://api.openweathermap.org/data/2.5';
 
-// Configuração padrão para as requisições
+// Default configuration for requests
 const api = axios.create({
     baseURL: BASE_URL,
     params: {
         appid: API_KEY,
-        units: 'metric', // Usar unidades métricas (Celsius)
-        lang: 'pt_br', // Resultados em português do Brasil
+        units: 'metric', // Use metric units (Celsius)
+        lang: 'en', // Results in English
     },
 });
 
-// Função para buscar clima atual por nome da cidade
+// Cache duration in milliseconds (30 minutes)
+const CACHE_DURATION = 30 * 60 * 1000;
+
+// Throttling configuration
+let lastApiCall = 0;
+const MIN_TIME_BETWEEN_CALLS = 1000; // 1 second minimum between API calls
+
+// API call counter for daily usage tracking
+const todayKey = new Date().toISOString().split('T')[0];
+
+const getApiCallCount = () => {
+    const countData = localStorage.getItem('api_call_count') || '{}';
+    const counts = JSON.parse(countData);
+    return counts[todayKey] || 0;
+};
+
+const incrementApiCallCount = () => {
+    const countData = localStorage.getItem('api_call_count') || '{}';
+    const counts = JSON.parse(countData);
+    counts[todayKey] = (counts[todayKey] || 0) + 1;
+    localStorage.setItem('api_call_count', JSON.stringify(counts));
+    return counts[todayKey];
+};
+
+// Apply throttling to any API call
+const throttleApiCall = async () => {
+    const now = Date.now();
+    if (now - lastApiCall < MIN_TIME_BETWEEN_CALLS) {
+        // Wait to avoid too frequent calls
+        await new Promise(resolve =>
+            setTimeout(resolve, MIN_TIME_BETWEEN_CALLS - (now - lastApiCall))
+        );
+    }
+    lastApiCall = Date.now();
+};
+
+// Check API call limit and increment counter
+const trackApiUsage = () => {
+    const count = getApiCallCount();
+    const newCount = incrementApiCallCount();
+
+    // Log API usage for debugging
+    console.log(`API call count for today: ${newCount}`);
+
+    // Optional: Add a limit if needed (1000 calls per day is a safe number for free plan)
+    if (count > 1000) {
+        throw new Error('Daily API call limit reached. Please try again tomorrow.');
+    }
+};
+
+// Function to fetch current weather by city name with caching and throttling
 export const fetchWeatherByCity = async (city) => {
     try {
+        // Check cache first
+        const cacheKey = `weather_${city.toLowerCase().trim()}`;
+        const cachedData = localStorage.getItem(cacheKey);
+
+        if (cachedData) {
+            const { data, timestamp } = JSON.parse(cachedData);
+            // If cache is fresh (less than 30 minutes old), return cached data
+            if (Date.now() - timestamp < CACHE_DURATION) {
+                console.log('Using cached weather data for:', city);
+                return data;
+            }
+        }
+
+        // Apply throttling before making API call
+        await throttleApiCall();
+
+        // Track API usage
+        trackApiUsage();
+
+        // Make API call
         const response = await api.get('/weather', {
             params: {
                 q: city,
             },
         });
+
+        // Save to cache
+        localStorage.setItem(cacheKey, JSON.stringify({
+            data: response.data,
+            timestamp: Date.now()
+        }));
+
         return response.data;
     } catch (error) {
+        // Re-throw the error to be handled by the caller
         throw error;
     }
 };
 
-// Função para buscar clima atual por coordenadas geográficas
+// Function to fetch current weather by coordinates with caching and throttling
 export const fetchWeatherByCoords = async (lat, lon) => {
     try {
+        // Check cache first
+        const cacheKey = `weather_coords_${lat}_${lon}`;
+        const cachedData = localStorage.getItem(cacheKey);
+
+        if (cachedData) {
+            const { data, timestamp } = JSON.parse(cachedData);
+            // If cache is fresh (less than 30 minutes old), return cached data
+            if (Date.now() - timestamp < CACHE_DURATION) {
+                console.log('Using cached weather data for coordinates:', lat, lon);
+                return data;
+            }
+        }
+
+        // Apply throttling before making API call
+        await throttleApiCall();
+
+        // Track API usage
+        trackApiUsage();
+
+        // Make API call
         const response = await api.get('/weather', {
             params: {
                 lat,
                 lon,
             },
         });
+
+        // Save to cache
+        localStorage.setItem(cacheKey, JSON.stringify({
+            data: response.data,
+            timestamp: Date.now()
+        }));
+
         return response.data;
     } catch (error) {
         throw error;
     }
 };
 
-// Função para buscar previsão de 5 dias por coordenadas
+// Function to fetch 5-day forecast by coordinates with caching and throttling
 export const fetchForecast = async (lat, lon) => {
     try {
+        // Check cache first
+        const cacheKey = `forecast_${lat}_${lon}`;
+        const cachedData = localStorage.getItem(cacheKey);
+
+        if (cachedData) {
+            const { data, timestamp } = JSON.parse(cachedData);
+            // If cache is fresh (less than 30 minutes old), return cached data
+            if (Date.now() - timestamp < CACHE_DURATION) {
+                console.log('Using cached forecast data for coordinates:', lat, lon);
+                return data;
+            }
+        }
+
+        // Apply throttling before making API call
+        await throttleApiCall();
+
+        // Track API usage
+        trackApiUsage();
+
+        // Make API call
         const response = await api.get('/forecast', {
             params: {
                 lat,
@@ -53,38 +178,45 @@ export const fetchForecast = async (lat, lon) => {
             },
         });
 
-        // Processar os dados para facilitar a exibição
+        // Process data for easier display
         const processedData = processForecastData(response.data);
+
+        // Save to cache
+        localStorage.setItem(cacheKey, JSON.stringify({
+            data: processedData,
+            timestamp: Date.now()
+        }));
+
         return processedData;
     } catch (error) {
         throw error;
     }
 };
 
-// Função auxiliar para processar dados da previsão
+// Helper function to process forecast data
 const processForecastData = (data) => {
-    // Agrupar previsões por dia
+    // Group forecasts by day
     const forecastByDay = {};
 
     data.list.forEach((item) => {
-        // Converter timestamp para objeto Date
+        // Convert timestamp to Date object
         const date = new Date(item.dt * 1000);
 
-        // Obter a data no formato YYYY-MM-DD (sem horas)
+        // Get date in YYYY-MM-DD format (without hours)
         const dayKey = date.toISOString().split('T')[0];
 
-        // Se ainda não houver um grupo para este dia, criar um
+        // If there isn't a group for this day yet, create one
         if (!forecastByDay[dayKey]) {
             forecastByDay[dayKey] = {
                 date: dayKey,
-                day: new Intl.DateTimeFormat('pt-BR', { weekday: 'long' }).format(date),
+                day: new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date),
                 items: [],
             };
         }
 
-        // Adicionar este item ao grupo do dia correspondente
+        // Add this item to the corresponding day group
         forecastByDay[dayKey].items.push({
-            time: date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+            time: date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
             temp: item.main.temp,
             feels_like: item.main.feels_like,
             humidity: item.main.humidity,
@@ -95,16 +227,16 @@ const processForecastData = (data) => {
         });
     });
 
-    // Converter para array e adicionar dados calculados
+    // Convert to array and add calculated data
     const processedForecast = Object.values(forecastByDay).map((day) => {
-        // Calcular temperaturas min/max/média do dia
+        // Calculate min/max/average temperatures for the day
         const temps = day.items.map((item) => item.temp);
         day.temp_min = Math.min(...temps);
         day.temp_max = Math.max(...temps);
         day.temp_avg = temps.reduce((sum, temp) => sum + temp, 0) / temps.length;
 
-        // Determinar o ícone e descrição principal para o dia
-        // (usando o registro do meio do dia quando possível)
+        // Determine the main icon and description for the day
+        // (using midday record when possible)
         const middayItem = day.items.find((item) => {
             const hour = new Date(item.dt * 1000).getHours();
             return hour >= 11 && hour <= 13;
@@ -115,6 +247,6 @@ const processForecastData = (data) => {
         return day;
     });
 
-    // Limitar para 5 dias
+    // Limit to 5 days
     return processedForecast.slice(0, 5);
 };
