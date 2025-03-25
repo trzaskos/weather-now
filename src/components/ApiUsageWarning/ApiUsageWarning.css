@@ -1,0 +1,77 @@
+.api-usage-warning {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.5rem 1rem;
+  z-index: 1000;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.api-usage-warning.low {
+  background-color: rgba(255, 243, 205, 0.95);
+  border-top: 1px solid #ffeeba;
+  color: #856404;
+}
+
+.api-usage-warning.medium {
+  background-color: rgba(255, 224, 199, 0.95);
+  border-top: 1px solid #ffd8b2;
+  color: #8a5d3b;
+}
+
+.api-usage-warning.high {
+  background-color: rgba(248, 215, 218, 0.95);
+  border-top: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+.warning-content {
+  display: flex;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.warning-icon {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.warning-text {
+  flex: 1;
+}
+
+.warning-text p {
+  margin: 0.25rem 0;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: inherit;
+  padding: 0;
+  margin-left: 1rem;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.close-button:hover {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .api-usage-warning {
+    font-size: 0.8rem;
+  }
+
+  .warning-icon {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+  }
+}

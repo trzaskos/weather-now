@@ -77,6 +77,21 @@ http://localhost:3000
 3. Generate a new API key
 4. Copy the key and add it to your `.env` file as shown above
 
+## ⚠️ API Usage Notice
+
+This project uses the **free tier** of the OpenWeatherMap API which has the following limitations:
+- 60 calls per minute
+- 1,000,000 calls per month
+- 5-day forecast available at 3-hour intervals
+
+To avoid exceeding these limits, this application implements several protective measures:
+- Client-side caching of weather data for 30 minutes
+- Throttling to prevent rapid successive API calls
+- Usage tracking with visual warnings
+- Limited recent searches history
+
+**For Portfolio Visitors**: This is a demonstration project. Please be mindful of API usage when testing the application. The weather data refreshes only every 30 minutes, so there's no need to search for the same location repeatedly.
+
 ## 📊 Project Structure
 
 ```

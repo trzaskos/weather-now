@@ -7,6 +7,7 @@ import { WeatherProvider } from './context/WeatherContext';
 import ThemeToggle from './components/ThemeToggle/ThemeToggle';
 import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
+import ApiUsageWarning from './components/ApiUsageWarning/ApiUsageWarning';
 import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
@@ -51,6 +52,9 @@ function App() {
           <p>Developed with ❤️ using React and OpenWeatherMap API</p>
           <p>&copy; {new Date().getFullYear()} WeatherNow</p>
         </footer>
+
+        {/* API Usage Warning Banner */}
+        <ApiUsageWarning />
       </div>
     </WeatherProvider>
   );
