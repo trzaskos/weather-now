@@ -9,7 +9,6 @@ import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import ApiUsageWarning from './components/ApiUsageWarning/ApiUsageWarning';
 import useLocalStorage from './hooks/useLocalStorage';
-import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   const [theme, setTheme] = useLocalStorage('theme', 'light');
@@ -56,7 +55,6 @@ function App() {
 
         {/* API Usage Warning Banner */}
         <ApiUsageWarning />
-        <Analytics />
       </div>
     </WeatherProvider>
   );
