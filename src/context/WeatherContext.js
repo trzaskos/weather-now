@@ -12,15 +12,17 @@ export const WeatherProvider = ({ children }) => {
     const [currentWeather, setCurrentWeather] = useState(null);
     const [forecast, setForecast] = useState(null);
     const [location, setLocation] = useState('');
+
+    // Limit recent searches to 3 to reduce API calls
     const [recentSearches, setRecentSearches] = useLocalStorage('recentSearches', []);
 
-    // Add city to recent searches
+    // Add city to recent searches (limited to 3)
     const addToRecentSearches = (city) => {
         setRecentSearches(prev => {
             // Add to beginning of array and remove duplicates
             const newSearches = [city, ...prev.filter(s => s !== city)];
-            // Limit to 5 recent searches
-            return newSearches.slice(0, 5);
+            // Limit to 3 recent searches to discourage excessive API usage
+            return newSearches.slice(0, 3);
         });
     };
 
@@ -46,6 +48,8 @@ export const WeatherProvider = ({ children }) => {
             setLoading(false);
             if (error.response && error.response.status === 404) {
                 setError('City not found. Please check the name and try again.');
+            } else if (error.message && error.message.includes('API call limit')) {
+                setError('Daily API call limit reached. Please try again tomorrow.');
             } else {
                 setError('Error fetching weather data. Please try again later.');
             }
@@ -86,7 +90,11 @@ export const WeatherProvider = ({ children }) => {
             );
         } catch (error) {
             setLoading(false);
-            setError('Error fetching weather data. Please try again later.');
+            if (error.message && error.message.includes('API call limit')) {
+                setError('Daily API call limit reached. Please try again tomorrow.');
+            } else {
+                setError('Error fetching weather data. Please try again later.');
+            }
             console.error('Error fetching weather data:', error);
         }
     };
