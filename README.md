@@ -1,70 +1,153 @@
-# Getting Started with Create React App
+# 🌤️ WeatherNow - Modern Weather Forecast App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A sleek, user-friendly weather forecast application built with React that utilizes the OpenWeatherMap API to provide real-time weather information.
 
-## Available Scripts
+![App Screenshot](./screenshots/app-screenshot.png)
 
-In the project directory, you can run:
+## ✨ Features
 
-### `npm start`
+- 🔍 Search for weather forecasts by city name
+- 🌡️ Display current temperature in both Celsius and Fahrenheit
+- 💨 Show wind speed, humidity, and atmospheric pressure
+- 🌅 Sunrise and sunset times
+- 📊 Five-day weather forecast
+- 🌈 Responsive design (works on mobile and desktop)
+- 🎨 Light and dark theme support
+- 📍 Option to use current location (requires user permission)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🛠️ Technologies Used
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **React**: JavaScript library for building the user interface
+- **Context API**: Application state management
+- **OpenWeatherMap API**: Weather data API
+- **Axios**: HTTP client for API requests
+- **CSS Modules**: Local scoped styling
+- **Jest & React Testing Library**: Unit and integration testing
+- **Netlify/Vercel**: Deployment and hosting
 
-### `npm test`
+## 📋 Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To run this project locally, you need to have installed:
 
-### `npm run build`
+- Node.js (v14.0.0 or higher)
+- npm (v6.0.0 or higher) or yarn
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🚀 Installation and Setup
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone this repository:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+git clone https://github.com/trzaskos/weather-now.git
+cd weather-now
+```
 
-### `npm run eject`
+2. Install dependencies:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+npm install
+# or
+yarn install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Create a `.env` file in the root directory and add your OpenWeatherMap API key:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+REACT_APP_OPENWEATHER_API_KEY=your_api_key_here
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. Start the development server:
 
-## Learn More
+```bash
+npm start
+# or
+yarn start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+5. Access the app in your browser:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+http://localhost:3000
+```
 
-### Code Splitting
+## 📝 How to Get an API Key
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. Visit [OpenWeatherMap](https://openweathermap.org/) and create a free account
+2. After logging in, go to the "API Keys" section
+3. Generate a new API key
+4. Copy the key and add it to your `.env` file as shown above
 
-### Analyzing the Bundle Size
+## 📊 Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
+weather-now/
+├── public/
+│   ├── index.html
+│   ├── favicon.ico
+│   └── ...
+├── src/
+│   ├── components/
+│   │   ├── CurrentWeather/
+│   │   ├── Forecast/
+│   │   ├── Search/
+│   │   └── ...
+│   ├── context/
+│   │   └── WeatherContext.js
+│   ├── services/
+│   │   └── api.js
+│   ├── utils/
+│   │   └── helpers.js
+│   ├── App.js
+│   └── index.js
+├── .env
+├── .gitignore
+├── package.json
+└── README.md
+```
 
-### Making a Progressive Web App
+## 🧪 Tests
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Run unit and integration tests:
 
-### Advanced Configuration
+```bash
+npm test
+# or
+yarn test
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 📱 Responsiveness
 
-### Deployment
+The app is fully responsive and adapts to different screen sizes:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Mobile devices (<768px)
+- Tablets (768px - 1024px)
+- Desktop (>1024px)
 
-### `npm run build` fails to minify
+## 🌐 Live Demo
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Check out the live demo at: [https://weather-now-app.netlify.app](https://weather-now-app.netlify.app)
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to open an issue or submit a pull request.
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📜 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 📧 Contact
+
+Maryele Trzaskos Gruber - [maryele.trzaskos@gmail.com](mailto:maryele.trzaskos@gmail.com)
+
+Project Link: [https://github.com/trzaskos/weather-now](https://github.com/trzaskos/weather-now)
+
+## ☕ Support
+
+If you find this project helpful, consider buying me a coffee!
+
+<p><a href="https://www.buymeacoffee.com/trzaskos"> <img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="60" width="217" alt="trzaskos" /></a></p>
