@@ -143,9 +143,9 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📧 Contact
 
-Your Name - [your-email@example.com](mailto:your-email@example.com)
+Mary T Gruber - [maryele.trzaskos@gmail.com](mailto:maryele.trzaskos@gmail.com)
 
-Project Link: [https://github.com/yourusername/weather-now](https://github.com/yourusername/weather-now)
+Project Link: [https://github.com/trzaskos/weather-now](https://github.com/trzaskos/weather-now)
 
 ## ☕ Support
 
