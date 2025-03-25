@@ -122,9 +122,9 @@ The app is fully responsive and adapts to different screen sizes:
 - Tablets (768px - 1024px)
 - Desktop (>1024px)
 
-## 🌐 Live Demo
+<!-- ## 🌐 Live Demo
 
-Check out the live demo at: [https://weather-now-app.netlify.app](https://weather-now-app.netlify.app)
+Check out the live demo at: [https://weather-now-app.netlify.app](https://weather-now-app.netlify.app) -->
 
 ## 🤝 Contributing
 
